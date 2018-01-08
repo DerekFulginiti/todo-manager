@@ -1,10 +1,15 @@
 <?php
 
-class Controller {
+include_once "controller.php";
+// base URL name for form validation logic
+$page = basename($_SERVER['PHP_SELF']);
 
-	public static function main() {
-		include_once "view.php";
-		$content = <<<HTML
+// form logic sent to controller
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+  Controller::validateForm($page);
+}
+
+$html = <<<HTML
 		<section class="login-wrapper">
 			<h1>Log In</h1>
 			<form class="login" id="login" action="index.php" method="POST">
@@ -33,10 +38,6 @@ class Controller {
 			</div>
 		</section>
 HTML;
-		$page = new Page();
-		$page->content = $content;
-		$page->Display();
-	}
-}
 
-Controller::main();
+// display page
+Controller::loadView($html);

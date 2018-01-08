@@ -1,10 +1,15 @@
 <?php
 
-class Controller {
+include_once "controller.php";
+// base URL name for form validation logic
+$page = basename($_SERVER['PHP_SELF']);
 
-  public static function main() {
-    include_once "view.php";
-    $content = <<<HTML
+// form logic sent to controller
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+  Controller::validateForm($page);
+}
+
+$html = <<<HTML
     <section class="signup-wrapper">
       <h1>Sign up!</h1>
       <form class="signup" id="signup" action="signup.php" method="POST">
@@ -31,10 +36,5 @@ class Controller {
       </div>
     </section>
 HTML;
-    $page = new Page();
-    $page->content = $content;
-    $page->Display();
-  }
-}
 
-Controller::main();
+Controller::loadView($html);
