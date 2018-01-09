@@ -17,23 +17,92 @@ class Controller {
     if($page == "signup.php") {
       echo "inside of the signup form";
       foreach($user_info as $key => $val) {
-        $val = trim($val);
+        $val = strtolower(trim($val));
         switch($key) {
           case "flname":
+            if($name_arr = Controller::validateName($val)) {
+              // echo "first name is $first_name and last name is $last_name";
+              $first_name = $name_arr[0];
+              $last_name = $name_arr[1];
+            } else {
+              // error has occurred
+              return 1;
+            }
             break;
           case "email":
+             if(Controller::validateEmail($val)) {
+              // echo "email is $val";
+             } else {
+              return 2;
+              // no match or error has occurred
+             }
             break;
           case "phone":
+            if(Controller::validatePhone($val)) {
+              // echo "phone number is $val";
+            } else {
+              return 3;
+            }
             break;
           case "password":
+            if(Controller::validatePassword($val)) {
+              // echo "password is $val";
+              // encrypt password
+              if($hash = Controller::encryptPassword($val)) {
+                // echo "the encrypted password is $hash";
+              } else {
+                return 4;
+              }
+            } else {
+              return 4;
+            }
             break;
           default:
+              return 5;
               break;
         }
       }
     }else if($page == "index.php") {
 
     }
+  }
+
+  private static function validateName($name) {
+    $pattern = '/^([a-z]{1,20}) ([a-z]{1,20})$/';
+    if(preg_match($pattern, $name, $matches)) {
+      return Array($matches[1], $matches[2]);
+    }else {
+      // no match or error has occurred
+      return FALSE;
+    }
+  }
+
+  private static function validateEmail($email) {
+    $pattern = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/';
+    if(preg_match($pattern, $email, $matches)) {
+      return $matches[0];
+    }else {
+      // no match or error has occurred
+      return FALSE;
+    }
+  }
+
+  private static function validatePhone($phone) {
+    $pattern = '/^\(?[0-9]{3}\)?\-?[0-9]{3}\-?[0-9]{4}$/';
+    return preg_match($pattern, $phone);
+  }
+
+  private static function validatePassword($password) {
+    $pattern = '/^([^ ]){6,20}$/';
+    return preg_match($pattern, $password);
+  }
+
+  private static function encryptPassword($password) {
+    return password_hash($password, PASSWORD_DEFAULT);
+  }
+
+  private static function verifyPassword($password, $hash) {
+    return password_verify($password, $hash);
   }
 }
 

@@ -2,9 +2,23 @@
 
 include_once "controller.php";
 $page = basename($_SERVER['PHP_SELF']);
+$name_err, $email_err, $phone_err, $pass_err;
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-	Controller::validateForm($page);
+	switch(Controller::validateForm($page)) {
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		default:
+			break;
+	}
 }
 
 $html = <<<HTML
