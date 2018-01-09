@@ -32,14 +32,14 @@ header span {
   line-height: 4.5vw;
 }
 
-.login-wrapper {
+.login-wrapper, .signup-wrapper {
   margin: 0 auto;
   padding: 1.5vw 0;
   position: relative;
   width: 20vw;
 }
 
-.login-wrapper h1 {
+.login-wrapper h1, .signup-wrapper h1 {
   font-size: 1.5vw;
   font-weight: bold;
   line-height: 2vw;
@@ -51,17 +51,14 @@ header span {
 }
 
 .field input {
-  font-size: 1vw;
   font-weight: bold;
-  padding: .75vw;
   -moz-transition: border-color: 0.4s;
   -o-transition: border-color: 0.4s;
   -webkit-transition: border-color: 0.4s;
   transition: border-color 0.4s;
-  width: 100%;
 }
 
-.field input:hover {
+.form-group input:hover {
   border: 1px solid #83C8F2;
 }
 
@@ -90,12 +87,6 @@ input[type="submit"], input[type="button"] {
   -o-transition: background-color: 0.4s;
   -webkit-transition: background-color: 0.4s;
   transition: background-color 0.4s;
-  width: 100%;
-}
-
-input[type="submit"]:hover, input[type="button"]:hover {
-  background-color: #0074BA;
-  border: 1px solid #0074BA;
 }
 
 .signup-prompt {
@@ -112,7 +103,7 @@ a:hover {
   text-decoration: underline;
 }
 
-.sidetip {
+.vfb {
   align-items: center;
   position: absolute;
   left: 21vw;
@@ -125,22 +116,21 @@ a:hover {
   margin-top: .75vw;
 }
 
-.sidetip p {
-  padding-left: 1vw;
+.vfb p {
+  padding-left: 1.25vw;
   background-repeat: no-repeat;
   background-position: left 0 top .2vw;
-  display: none;
 }
 
-.sidetip p.invalid {
+.vfb p.invalid {
   background-image: url("error.png");
-  background-size: 30%;
+  background-size: 8%;
   color: #c22;
 }
 
-.sidetip p.ok {
+.vfb p.ok {
   background-image: url("ok.png");
-  background-size: 30%;
+  background-size: 25%;
   color: #0e8710;
 }
 

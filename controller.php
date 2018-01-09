@@ -2,33 +2,33 @@
 
 class Controller {
 
-  public static function loadView($content) {
+  public static function main($html) {
     include_once "view.php";
+    $content = $html;
     $page = new Page();
     $page->content = $content;
     $page->Display();
   }
 
   public static function validateForm($page) {
+  // logic for form submission
+    echo "A form has been submitted.";
     $user_info = $_POST['user'];
     if($page == "signup.php") {
+      echo "inside of the signup form";
       foreach($user_info as $key => $val) {
-        switch($val) {
+        $val = trim($val);
+        switch($key) {
           case "flname":
-            // implement regex check
             break;
           case "email":
-            // implement regex check
             break;
           case "phone":
-            // implement regex check
             break;
           case "password":
-            // implement regex check
             break;
           default:
-            // probably throw custom exception here
-            break;
+              break;
         }
       }
     }else if($page == "index.php") {
