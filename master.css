@@ -125,7 +125,14 @@ a:hover {
 .vfb p.invalid {
   background-image: url("error.png");
   background-size: 8%;
+}
+
+.invalid {
   color: #c22;
+}
+
+.signup-wrapper .invalid {
+  font-size: 1vw !important;
 }
 
 .vfb p.ok {

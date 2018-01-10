@@ -2,6 +2,10 @@
 
 class Controller {
 
+	public static $first_name = "";
+	public static $last_name = "";
+	public static $hash = "";
+
   public static function main($html) {
     include_once "view.php";
     $content = $html;
@@ -20,7 +24,7 @@ class Controller {
         $val = strtolower(trim($val));
         switch($key) {
           case "flname":
-            if($name_arr = Controller::validateName($val)) {
+            if($name_arr = self::validateName($val)) {
               // echo "first name is $first_name and last name is $last_name";
               $first_name = $name_arr[0];
               $last_name = $name_arr[1];
@@ -30,7 +34,7 @@ class Controller {
             }
             break;
           case "email":
-             if(Controller::validateEmail($val)) {
+             if(self::validateEmail($val)) {
               // echo "email is $val";
              } else {
               return 2;
@@ -38,21 +42,17 @@ class Controller {
              }
             break;
           case "phone":
-            if(Controller::validatePhone($val)) {
+            if(self::validatePhone($val)) {
               // echo "phone number is $val";
             } else {
               return 3;
             }
             break;
           case "password":
-            if(Controller::validatePassword($val)) {
+            if(self::validatePassword($val)) {
               // echo "password is $val";
-              // encrypt password
-              if($hash = Controller::encryptPassword($val)) {
-                // echo "the encrypted password is $hash";
-              } else {
-                return 4;
-              }
+              if(self::encryptPassword($val) === FALSE)
+              	return 4;
             } else {
               return 4;
             }
@@ -70,6 +70,8 @@ class Controller {
   private static function validateName($name) {
     $pattern = '/^([a-z]{1,20}) ([a-z]{1,20})$/';
     if(preg_match($pattern, $name, $matches)) {
+    	self::$first_name = $matches[1];
+    	self::$last_name = $matches[2];
       return Array($matches[1], $matches[2]);
     }else {
       // no match or error has occurred
@@ -98,7 +100,10 @@ class Controller {
   }
 
   private static function encryptPassword($password) {
-    return password_hash($password, PASSWORD_DEFAULT);
+    if(self::$hash = password_hash($password, PASSWORD_DEFAULT))
+    	return TRUE;
+    else
+    	return FALSE;
   }
 
   private static function verifyPassword($password, $hash) {
