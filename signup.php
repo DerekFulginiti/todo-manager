@@ -37,7 +37,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$stmt->execute();
 			if($stmt->fetchColumn() === FALSE) {
 				// user does not exist
-				$sql = "INSERT INTO user (first_name, last_name, email, phone, password) VALUES (:first_name, :last_name, :email, :phone, :hash)";
+				$sql = "INSERT INTO user (first_name, last_name, email, phone, password, verified) VALUES (:first_name, :last_name, :email, :phone, :hash, 0)";
 				$stmt = $db->prepare($sql);
 				$stmt->bindParam(":first_name", $first_name, PDO::PARAM_STR);
 				$stmt->bindParam(":last_name", $last_name, PDO::PARAM_STR);
