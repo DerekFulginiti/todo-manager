@@ -16,10 +16,8 @@ class Controller {
 
   public static function validateForm($page) {
   // logic for form submission
-    echo "A form has been submitted.";
     $user_info = $_POST['user'];
     if($page == "signup.php") {
-      echo "inside of the signup form";
       foreach($user_info as $key => $val) {
         $val = strtolower(trim($val));
         switch($key) {
@@ -63,7 +61,31 @@ class Controller {
         }
       }
     }else if($page == "index.php") {
-
+    	foreach($user_info as $key => $val) {
+        $val = strtolower(trim($val));
+        switch($key) {
+          case "email":
+             if(self::validateEmail($val)) {
+              // echo "email is $val";
+             } else {
+              return 1;
+              // no match or error has occurred
+             }
+            break;
+          case "password":
+            if(self::validatePassword($val)) {
+              // echo "password is $val";
+              if(self::encryptPassword($val) === FALSE)
+              	return 2;
+            } else {
+              return 2;
+            }
+            break;
+          default:
+              return 3;
+              break;
+        }
+      }
     }
   }
 
@@ -99,14 +121,11 @@ class Controller {
     return preg_match($pattern, $password);
   }
 
-  private static function encryptPassword($password) {
-    if(self::$hash = password_hash($password, PASSWORD_DEFAULT))
-    	return TRUE;
-    else
-    	return FALSE;
+  public static function encryptPassword($password) {
+  	return password_hash($password, PASSWORD_DEFAULT);
   }
 
-  private static function verifyPassword($password, $hash) {
+  public static function verifyPassword($password, $hash) {
     return password_verify($password, $hash);
   }
 }

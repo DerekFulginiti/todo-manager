@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$name_err = $email_err = $phone_err = $pass_err = "<p class='ok'>Valid</p>";
 			$first_name = Controller::$first_name;
 			$last_name = Controller::$last_name;
-			$hash = Controller::$hash;
+			$hash = Controller::encryptPassword($password);
 			$sql = "SELECT 1 FROM user WHERE email = ?";
 			$stmt = $db->prepare($sql);
 			$stmt->bindParam(1, $email, PDO::PARAM_STR);
